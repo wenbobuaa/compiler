@@ -7,7 +7,7 @@ enum symbol { nul, BEGINSY, ENDSY, IFSY, THENSY, ELSESY,
 	        IDSY, CONSTSY, VARSY, PROCSY, READSY, WRITESY,
 			DOSY, WHILESY, CALLSY, INTSY, REALSY, PLUSSY, 
 			MINUSSY, STARSY, DIVISY, LPASY, RPASY,COLOSY,
-			COMMASY, SEMISY, PERISY, BECOMESY, ODDSY };
+			COMMASY, SEMISY, PERISY, BECOMESY, ODDSY, STRSY };
 enum object { CONSTSY, VARSY, PROCSY };
 enum fct { };
 
@@ -24,10 +24,12 @@ int isSpace();
 int isNewline();
 int isTab();
 int isLetter();
+int isChar();
 int isDigit();
 int isColon();
 int isComma();
 int isSemi();
+int isQuot();
 int isEqu();
 int isPlus();
 int isMinus();

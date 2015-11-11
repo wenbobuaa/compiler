@@ -51,6 +51,16 @@ int isLetter(){
 	}
 }
 
+int isChar(){
+	if( ch == ' ' || ch == '!' ){
+		return 1;
+	}else if( ch >= 35 && ch <= 126 ){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
 int isDigit(){
 	if( ch >= '0' && ch <= '9' ){
 		return 1;
@@ -83,6 +93,13 @@ int isSemi(){
 	}
 }
 
+int isQuot(){
+	if( ch == '"' ){
+		return 1;
+	}else{
+		return 0;
+	}
+}
 int isEqu(){
 	if( ch == '=' ){
 		return 1;
@@ -151,9 +168,9 @@ int transNum(){
 	int result = 0;
 	int i = 0;
 
-	if(Token[i] == '0'){
+	/*if(Token[i] == '0'){
 		error();
-	}
+	}*/
 
 	for(i = 0; Token[i] != '\0'; i++){
 		result = result*10 + Token[i];
