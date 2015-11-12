@@ -1,7 +1,7 @@
-#define norw	13	//±£Áô×Ö¸öÊı
-#define txmax	100	//·ûºÅ±íµÄ³¤¶È
-#define nmax	14	//Êı×ÖµÄ×î´ó³¤¶È
-#define al		10	//±êÊ¶·ûµÄ×î´ó³¤¶È
+#define norw	13	//ä¿ç•™å­—ä¸ªæ•°
+#define txmax	100	//ç¬¦å·è¡¨çš„é•¿åº¦
+#define nmax	14	//æ•°å­—çš„æœ€å¤§é•¿åº¦
+#define al		10	//æ ‡è¯†ç¬¦çš„æœ€å¤§é•¿åº¦
 
 enum symbol { nul, BEGINSY, ENDSY, IFSY, THENSY, ELSESY, 
 	        IDSY, CONSTSY, VARSY, PROCSY, READSY, WRITESY,
