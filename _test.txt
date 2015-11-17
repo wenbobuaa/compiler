@@ -1,0 +1,83 @@
+const NU = 123456;
+var i : integer;
+  a := char;
+procedure test( p : integer; var t : char);
+  var sw, i, j : integer;
+  function xtest1 ( i : integer, var j : integer): integer; 
+    var re, a : integer;
+    begin
+      if i < j then re := xtest1(j, i)
+	  else
+	    begin
+		  if j = 0 then xtest1 := i
+		  else
+      		begin
+			  a := j;
+			  j := i - i / j * j;
+			  i := a;
+			  re := xtext1(i, j)
+			end
+		end
+    end;
+  procedure xtest2 (a : integer);
+    const N := 5;
+    var i : integer;
+	  s := array[10] of integer;
+	begin
+	  for i := 0 to N - 1 do
+	    begin
+		  s[i] := a;
+		  a := a + 1
+		end;
+	  for i := N - 1 downto 0 do
+        begin
+		  write(s[i]);
+		  write(" ")
+		end
+	end;
+  procedure xtest3;
+    var ch : char;
+	begin
+	  ch := 'h';
+	  write("~!@#$%^&*()");
+	  write(" ");
+	  write(NU);
+	  write(" ");
+	  write("=> ", ch);
+	  write(" ")
+	end;
+  begin
+    read(sw);
+	case sw of
+	  1 : begin
+			read(i, j);
+			write(xtest1(i, j));
+			write(" ");
+			write(i);
+			write(" ");
+			write(j);
+			write(" ")
+		  end;
+	  2 : begin
+			read(i);
+			xtest2(i)
+		  end;
+	  3 : xtest3;
+	  4 : begin
+			write(p + t);
+			write(" ");
+			t := '0';
+			write(t);
+			write(" ");
+		  end
+	end
+  end;
+begin
+  a := 'a';
+  read(i);
+  test(i, a);
+  write(i);
+  write(" ");
+  write(a);
+  write(" ")
+end.
