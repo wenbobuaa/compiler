@@ -3,6 +3,7 @@
 
 void getsym(){
 	//词法分析程序
+	getChar();
 	while(isSpace() || isNewline() || isTab()){
 		getChar();
 	}

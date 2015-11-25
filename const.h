@@ -22,6 +22,10 @@
 #define strmax	100	//字符串最大长度
 #endif // strmax
 
+#ifndef lsym
+#define lsym 44 //symbol的个数
+#endif
+
 #ifndef SYMBOL
 #define SYMBOL
     typedef enum SYMBOL_ { IDSY, ARRAYSY, BEGINSY, CASESY, CHARACTER, CONSTSY, DOSY, DOWNTO,

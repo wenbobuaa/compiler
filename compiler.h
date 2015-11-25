@@ -7,6 +7,7 @@
 #define al	18	//标识符的最大长度
 #define lmax	81  //行缓冲区的最大长度
 #define strmax	100	//字符串最大长度
+#define lsym 44	//symbol的个数
 
 
 typedef enum SYMBOL_ { IDSY, ARRAYSY, BEGINSY, CASESY, CHARACTER, CONSTSY, DOSY, DOWNTO, ELSESY, ENDSY, FORSY, FUNCSY, IFSY, INTEGER, OFSY, PROCSY, READSY, THENSY, TOSY, VARSY, WRITESY,
@@ -61,3 +62,33 @@ int transNum();//转化成整数
 void erro(int sw);//报错
 void initReserver();//初始化保留字表
 void getsym();//词法分析程序
+
+int symNeed[lsym];//符合要求的类型表
+void grammar();//语法分析程序
+void procedure();//程序
+void subPro();//分程序
+void consDef();//常量定义
+void constAnaly();//常量分析
+void varDef();//变量定义
+void proHead();//过程头部
+void funcHead();//函数头部
+void formParaList();//形式参数表
+void Type();//类型
+void baseType();//基本类型
+void formParaSeg();//形式参数段
+void comState();//复合语句
+void state();//语句
+void assignment();//赋值语句
+void conditionState();//条件语句
+void caseState();//情况语句
+void proCall();//过程调用
+void readState();//读语句
+void writeState();//写语句
+void loop();//循环
+void expression();//表达式
+void condition();//条件
+void caseelement();//情况元素表
+void actParaList();//实际参数表
+void term();//项
+void factor();//因子
+void funcCall();//函数调用

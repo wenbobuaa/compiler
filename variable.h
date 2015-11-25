@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "const.h"
+#define DEBUG
 
 extern SYMBOL symbol;//当前读取的单词的类型
 extern char ch;//正在处理的字符
@@ -15,3 +16,5 @@ extern int kkk;//字符串栈指针
 extern char * reserverTable[norw];//保留字表
 extern FILE * In;
 extern FILE * Out;
+
+extern int symNeed[lsym];//符合要求的类型表
