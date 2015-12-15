@@ -230,9 +230,14 @@ int isRpar(){
 }
 
 void catToken(){
+    int temp = 0;
+    temp = 'A' - 'a';
 	if(kk == al - 1){
 		clearToken();
 	}else{
+        if(ch >= 'A' && ch <= 'Z'){
+            ch = ch - temp;
+        }
 		token[kk] = ch;
 		kk += 1;
 	}

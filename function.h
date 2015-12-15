@@ -40,39 +40,39 @@ extern void getsym();//词法分析程序
 
 extern void grammar();//语法分析程序
 extern void procedure();//程序
-extern void subPro();//分程序
-extern void consDef();//常量定义
-extern void constAnaly();//常量分析
-extern void varDef();//变量定义
-extern void proHead();//过程头部
-extern void funcHead();//函数头部
-extern void formParaList();//形式参数表
-extern void Type();//类型
-extern _SYMBOL baseType();//基本类型
-extern void formParaSeg();//形式参数段
-extern void comState();//复合语句
-extern void state();//语句
-extern void assignment();//赋值语句
-extern void conditionState();//条件语句
-extern void caseState();//情况语句
-extern void proCall();//过程调用
-extern void readState();//读语句
-extern void writeState();//写语句
-extern void loop();//循环
-extern void expression();//表达式
-extern void condition();//条件
-extern void caseelement();//情况元素表
-extern void actParaList();//实际参数表
-extern void term();//项
-extern void factor();//因子
-extern void funcCall();//函数调用
+extern void subPro(int lev, int levtop, int adr);//分程序
+extern void consDef(int lev, int levtop);//常量定义
+extern void constAnaly(int lev, int levtop);//常量分析
+extern void varDef(int lev, int levtop, int * adr);//变量定义
+extern void proHead(int lev, int levtop);//过程头部
+extern void funcHead(int lev, int levtop);//函数头部
+extern void formParaList(int lev, int levtop);//形式参数表
+extern void Type(int lev, int levtop, int * adr);//类型
+extern _SYMBOL baseType(int lev, int levtop);//基本类型
+extern void formParaSeg(int lev, int levtop, int * adr);//形式参数段
+extern void comState(int btablev, int lev, int levtop, int adr);//复合语句
+extern void state(int btablev, int lev, int levtop, int adr);//语句
+extern void assignment(int btablev, int i, int lev, int levtop, int adr);//赋值语句
+extern void conditionState(int btablev, int lev, int levtop, int adr);//条件语句
+extern void caseState(int btablev, int lev, int levtop, int adr);//情况语句
+extern void proCall(int btablev, int i, int lev, int levtop, int adr);//过程调用
+extern void readState(int btablev, int lev, int levtop, int adr);//读语句
+extern void writeState(int btablev, int lev, int levtop, int adr);//写语句
+extern void loop(int btablev, int lev, int levtop, int adr);//循环
+extern int expression(int btablev, int lev, int levtop, int adr);//表达式
+extern void condition(int btablev, int lev, int levtop, int adr);//条件
+extern void caseelement(int btablev, int i, int lev, int levtop, int adr);//情况元素表
+extern void actParaList(int btablev, int i, int lev, int levtop, int adr);//实际参数表
+extern int term(int btablev, int lev, int levtop, int adr);//项
+extern int factor(int btablev, int lev, int levtop, int adr);//因子
+extern int funcCall(int btablev, int lev, int levtop, int adr);//函数调用
 
 extern int tabtest(int lev, char * name);//查重符号表
 extern void tabtype(_SYMBOL symbol, int ternnum);//批量填充类型
-extern void tabadr(int adrtop, int num, int termnum);
+extern void tabadr(int * adr, int num, int termnum);
 extern void tabref(int atabtop, int termnum);
 extern void tablink(int levtop, int termnum);
-extern int tabfind(char * name);//查符号表
-extern void gen(char * des, _OP opt, char * fir, char * sec);//生成四元式
-extern void list();//列出当前四元式
-extern void constant();//常量
+extern int tabfind(char * name, int levtop);//查符号表
+extern void gen(int lev, int btablev, char * des, _OP opt, char * fir, char * sec);//生成四元式
+extern void list_();//列出当前四元式
+extern void constant(int lev, int btablev);//常量

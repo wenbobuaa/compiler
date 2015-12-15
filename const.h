@@ -37,23 +37,23 @@
 
 #ifndef OBJ
 #define OBJ
-	typedef enum OBJ_ {CONST, VAR, FUNCTION, PROCEDURE, nul} _OBJ;
+	typedef enum OBJ_ {CONST, VAR, FUNCTION, PROCEDURE, nulOBJ} _OBJ;
 #endif
 
 #ifndef BOOL
-#define BOOl
-	typedef enum BOOL_ {VALUE, REFERENCE, nul} _BOOL;
+#define BOOL
+	typedef enum BOOL_ {TRUE, FALSE, nulBOOL} _BOOL;
 #endif
 
 #ifndef TAB
 #define TAB
-	typedef struct TAB_{//符号表
-		char[al] name;//标识符的名字
+	typedef struct TAB_ {//符号表
+		char name[al];//标识符的名字
 		_OBJ obj;//标识符的种类
 		_SYMBOL typ;//标识符的类型
 		int ref;//引用信息
 		int lev;//层数
-		_BOOl normal;//参数类型
+		_BOOL normal;//参数类型
 		int adr;//值
 		int link;//同一个分程序中上一个记录
 	}_TAB;
@@ -72,33 +72,42 @@
 #ifndef BTAB
 #define BTAB
 	typedef struct BTAB_{//分程序
+	    char name[al];
 		int last;//分程序的最后一个标识符在tab中的位置
 		int lastpar;//分程序的最后一个参数在tab中的位置
 		int psize;//参数所占的存储单元数量
 		int vsize;//局部变量所占的存储单元的数量
 		int adr;//函数的运行地址基址
 		int code;//生成指令的位置
-	}_BATB;
+	} _BTAB;
 #endif
 
 #ifndef OP
 #define OP
 	typedef enum OP_{//运算符
-		nul, PLUS, MINUS, STAR, DIVI, EQU, UNE, GTH,
-		LTH, GEQ, LEQ, LOD, CALL, STO, LAB, LI, ARR,
-		JMP, RED, WRI
+		nulOP, PLUS, MINUS, STAR, DIVI, EQU, UNE, GTH,
+		LTH, GEQ, LEQ, LOD, CALLP, CALLF, STO, LAB, LI, ARRV,
+		JMP, REDI, REDC, WRII, WRIC, WRIS, TRAV, TRAR, RETP, RETF, ARRA
 	}_OP;
 #endif
 
 #ifndef CODE
 #define CODE
-	typedef struct CODE_{//四元式
-		char[al] des;
-		char[al] fir;
+	typedef struct CODE_ {//四元式
+		char des[al];
+		char fir[strmax];
 		_OP opt;
-		char[al] sec;
-		int destyp;
-		int firtyp;
-		int sectyp;//操作数类型可以是整数0，标号1，地址2
-	}
-#end
+		char sec[al];
+		int lev;
+        int ref;
+	} _CODE;
+#endif // CODE
+
+#ifndef VARTAG
+#define VARTAG
+    typedef struct VARTAG_ {
+        char name[al];
+        int reg;
+        int adr;
+    } _VARTAG;
+#endif // VARTAG
