@@ -1,7 +1,6 @@
-const NU = 123456;
+const NU = 123456, a = 'a';
 var i : integer;
-  a : char;
-procedure test( p : integer; var t : char);
+procedure test( p : integer; t : char);
   var sw, i, j : integer;
   procedure xtest2 (a : integer);
     const N = 5;
@@ -20,9 +19,8 @@ procedure test( p : integer; var t : char);
 		end
 	end;
   procedure xtest3;
-    var ch : char;
+    const ch = 'h';
 	begin
-	  ch := 'h';
 	  write("~!@#$%^&*()");
 	  write(" ");
 	  write(NU);
@@ -33,7 +31,7 @@ procedure test( p : integer; var t : char);
   function xtest1 ( i : integer; var j : integer): integer; 
     var re, a : integer;
     begin
-      if i < j then re := xtest1(j, i)
+      if i < j then xtest1 := xtest1(j, i)
 	  else
 	    begin
 		  if j = 0 then xtest1 := i
@@ -42,7 +40,8 @@ procedure test( p : integer; var t : char);
 			  a := j;
 			  j := i - i / j * j;
 			  i := a;
-			  re := xtext1(i, j)
+			  re := xtest1(i, j);
+			  xtest1 := re
 			end
 		end
     end;
@@ -66,14 +65,12 @@ procedure test( p : integer; var t : char);
 	  4 : begin
 			write(p + t);
 			write(" ");
-			t := '0';
 			write(t);
 			write(" ");
 		  end
 	end
   end;
 begin
-  a := 'a';
   read(i);
   test(i, a);
   write(i);

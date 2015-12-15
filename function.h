@@ -48,7 +48,7 @@ extern void proHead();//过程头部
 extern void funcHead();//函数头部
 extern void formParaList();//形式参数表
 extern void Type();//类型
-extern void baseType();//基本类型
+extern _SYMBOL baseType();//基本类型
 extern void formParaSeg();//形式参数段
 extern void comState();//复合语句
 extern void state();//语句
@@ -66,3 +66,13 @@ extern void actParaList();//实际参数表
 extern void term();//项
 extern void factor();//因子
 extern void funcCall();//函数调用
+
+extern int tabtest(int lev, char * name);//查重符号表
+extern void tabtype(_SYMBOL symbol, int ternnum);//批量填充类型
+extern void tabadr(int adrtop, int num, int termnum);
+extern void tabref(int atabtop, int termnum);
+extern void tablink(int levtop, int termnum);
+extern int tabfind(char * name);//查符号表
+extern void gen(char * des, _OP opt, char * fir, char * sec);//生成四元式
+extern void list();//列出当前四元式
+extern void constant();//常量
