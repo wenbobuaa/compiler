@@ -38,15 +38,14 @@ int main(){
 		fileclose();
 		return 1;
 	}
+	errornum = 0;
 	initReserver();
 	for(i = 0; i < lsym; i++){
 		symNeed[i] = 0;
-        //itoa(-1*i, temp, al);
-       //printf("%s\n", temp);
 	}
 	grammar();
 	printf("grammar finished.\n");
-
+	printf("%d error(s).\n", errornum);
     fprintf(MOUT, ".test\n");
 	trans();
 	fileclose();

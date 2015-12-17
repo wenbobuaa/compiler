@@ -27,9 +27,9 @@ void procedure(){
 	subPro(1, -1, 2);
 	symNeed[PERISY] = 0;
 	if(isPeri()){
-		printf("finished.\n");
+		//printf("finished.\n");
 	}else{
-		error();
+		error(-1);
 		printf("need peri.");
 	}
 	#ifdef DEBUG
@@ -736,12 +736,19 @@ void subPro(int lev, int levtop, int adr){
 		rst = rst + term(btablev, lev, levtop, adr);
 		symNeed[PLUSSY] = 0;
 		symNeed[MINUSSY] = 0;
+		if(ctab[ctabtop-1].opt == ARRA){
+            gen(lev, btablev, "T", LOD, ctab[ctabtop-1].des, "0");
+        }
 		if(flag){
             flag = 0;
 			gen(lev, btablev, ctab[ctabtop-1].des, MINUS, "0", ctab[ctabtop-1].des);
 		}
 		strcpy(temp, ctab[ctabtop-1].des);
 		while(symbol == PLUSSY || symbol == MINUSSY){
+            if(ctab[ctabtop-1].opt == ARRA){
+                gen(lev, btablev, "T", LOD, ctab[ctabtop-1].des, "0");
+                strcpy(temp, ctab[ctabtop-1].des);
+            }
 			if(symbol == PLUSSY){
 				flag = 2;
 			}
@@ -751,6 +758,9 @@ void subPro(int lev, int levtop, int adr){
 			rst = rst + term(btablev, lev, levtop, adr);
 			symNeed[PLUSSY] = 0;
 			symNeed[MINUSSY] = 0;
+			if(ctab[ctabtop-1].opt == ARRA){
+                gen(lev, btablev, "T", LOD, ctab[ctabtop-1].des, "0");
+            }
 			if(flag == 2){
 			    flag = 0;
 				gen(lev, btablev, "T", PLUS, temp, ctab[ctabtop-1].des);
@@ -1062,6 +1072,7 @@ void subPro(int lev, int levtop, int adr){
 
 	void proCall(int btablev, int i, int lev, int levtop, int adr){
         char temp[al];
+        gen(lev, btablev, "-", SAVR, "-", "-");
 		getsym();
 		itoa(btab[tab[i].ref].psize, temp, 10);
 		if(symbol == LPASY){
@@ -1366,7 +1377,8 @@ void subPro(int lev, int levtop, int adr){
 				    itoa(btab[i].psize-num, temp, 10);
                     if(tab[last-num+1].normal == TRUE){
                         if(ctab[ctabtop-1].opt == LOD){
-                            gen(lev, btablev, "-", TRAR, ctab[ctabtop-1].fir, temp);
+                            ctabtop--;
+                            gen(lev, btablev, "-", TRAR, ctab[ctabtop].fir, temp);
                         }else{
                             error(-1);
                             printf("need an address.\n");
@@ -1384,7 +1396,8 @@ void subPro(int lev, int levtop, int adr){
 					itoa(btab[i].psize-num, temp, 10);
                     if(tab[last-num+1].normal == TRUE){
                         if(ctab[ctabtop-1].opt == LOD){
-                            gen(lev, btablev, "-", TRAR, ctab[ctabtop-1].fir, temp);
+                            ctabtop--;
+                            gen(lev, btablev, "-", TRAR, ctab[ctabtop].fir, temp);
                         }else{
                             error(-1);
                             printf("need an address.\n");
@@ -1478,6 +1491,10 @@ void subPro(int lev, int levtop, int adr){
 		strcpy(temp, ctab[ctabtop-1].des);
 
 		while(symbol == STARSY || symbol == DIVISY){
+            if(ctab[ctabtop-1].opt == ARRA){
+                gen(lev, btablev, "T", LOD, temp, "0");
+                strcpy(temp, ctab[ctabtop-1].des);
+            }
 			if(symbol == STARSY){
 				flag = 1;
 			}
@@ -1487,6 +1504,9 @@ void subPro(int lev, int levtop, int adr){
 			rst += factor(btablev, lev, levtop, adr);
 			symNeed[STARSY] = 0;
 			symNeed[DIVISY] = 0;
+			if(ctab[ctabtop-1].opt == ARRA){
+                gen(lev, btablev, "T", LOD, ctab[ctabtop-1].des , "0");
+            }
 			if(flag){
                 flag = 0;
                 gen(lev, btablev, "T", STAR, temp, ctab[ctabtop-1].des);
@@ -1538,7 +1558,7 @@ void subPro(int lev, int levtop, int adr){
 				expression(btablev, lev, levtop, adr);
 				symNeed[RBRACSY] = 0;
 
-				gen(lev, btablev, "T", ARRV, temp, ctab[ctabtop-1].des);
+				gen(lev, btablev, "T", ARRA, temp, ctab[ctabtop-1].des);
 				if(symbol == RBRACSY){
 					getsym();
 				}else{
@@ -1589,6 +1609,7 @@ void subPro(int lev, int levtop, int adr){
 		int temp;
         char func[al];
         char temp1[al];
+         gen(lev, btablev, "-", SAVR, "-", "-");
 		if(symbol == IDSY){
 			i = tabfind(token, levtop);
 			if(tab[i].obj == FUNCTION){
@@ -1723,7 +1744,6 @@ void list_(){
 			case LAB : strcpy(temp, "LAB");break;
 			case LI : strcpy(temp, "LI");break;
 			case ARRA : strcpy(temp, "ARRA");break;
-			case ARRV : strcpy(temp, "ARRV");break;
 			case JMP : strcpy(temp, "JMP");break;
 			case REDI : strcpy(temp, "REDI");break;
 			case REDC : strcpy(temp, "REDC");break;
@@ -1734,6 +1754,7 @@ void list_(){
 			case TRAR : strcpy(temp, "TRAR");break;
 			case RETP : strcpy(temp, "RETP");break;
 			case RETF : strcpy(temp, "RETF");break;
+			case SAVR : strcpy(temp, "SAVR");break;
 			default : strcpy(temp, "-");break;
 		}
 		fprintf(OUT, "%5s\t%5s\t%5s\t%5s\n", ctab[i].des, temp, ctab[i].fir, ctab[i].sec);

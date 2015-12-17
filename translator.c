@@ -3,8 +3,8 @@
 #include "const.h"
 #include "function.h"
 void initreg(){
-	int i = 8;
-	for(i = 8; i <= 25; i++){
+	int i = 4;
+	for(i = 4; i <= 25; i++){
 		regtab[i] = -1;
 		regtabbuf[i] = -1;
 		regnum[i] = 0;
@@ -12,15 +12,15 @@ void initreg(){
 	fprintf(MOUT, "\t\tli,\t$fp,\t0x10000000\n");
 }
 void coverreg(){
-    int i = 8;
-	for(i = 8; i <= 25; i++){
+    int i = 4;
+	for(i = 4; i <= 25; i++){
 		regtab[i] = -1;
 		regnum[i] = 0;
 	}
 }
 void recoverreg(){
     int i = 8;
-	for(i = 8; i <= 25; i++){
+	for(i = 4; i <= 25; i++){
 		regtab[i] = regtabbuf[i];
 	}
 }
@@ -715,10 +715,6 @@ void trans(){
 				fprintf(MOUT, "\t\tlw,\t$%d,\t0($%d)\n", desj, firj);
 			}break;
 			case CALLP :{
-				for(desi = 8; desi <= 25; desi++){
-					fprintf(MOUT, "\t\tsw,\t$%d,\t0($gp)\n", desi);
-					fprintf(MOUT, "\t\taddi,\t$gp,\t$gp,\t4\n");
-				}
 				fprintf(MOUT, "\t\tsw,\t$sp,\t0($gp)\n");
 				fprintf(MOUT, "\t\taddi,\t$gp,\t$gp,\t4\n");
 				blev = nowctabadr;
@@ -736,8 +732,8 @@ void trans(){
 				}
 				secj = atoi(sec);
 				firj = 8;
-				for(desi = 0; desi < secj; desi++){
-					fprintf(MOUT,"\t\tsw,\t$a%d,%d($sp)\n", desi, firj);
+				for(desi = 4; desi < secj+4; desi++){
+					fprintf(MOUT,"\t\tsw,\t$%d,%d($sp)\n", desi, firj);
 					firj += 4;
 				}
 				strcpy(temp1, "B");
@@ -747,10 +743,6 @@ void trans(){
 				fprintf(MOUT, "\t\tjal,\t%s\n", fir);
 			}break;
 			case CALLF : {
-				for(desi = 8; desi <= 25; desi++){
-					fprintf(MOUT, "\t\tsw,\t$%d,\t0($gp)\n", desi);
-					fprintf(MOUT, "\t\taddi,\t$gp,\t$gp\t4\n");
-				}
 				fprintf(MOUT, "\t\tsw,\t$sp,\t0($gp)\n");
 				fprintf(MOUT, "\t\taddi,\t$gp,\t$gp,\t4\n");
 				blev = nowctabadr;
@@ -768,8 +760,8 @@ void trans(){
 				}
 				secj = atoi(sec);
 				firj = 8;
-				for(desi = 0; desi < secj; desi++){
-					fprintf(MOUT,"\t\tsw,\t$a%d,%d($sp)\n", desi, firj);
+				for(desi = 4; desi < secj+4; desi++){
+					fprintf(MOUT,"\t\tsw,\t$%d,%d($sp)\n", desi, firj);
 					firj += 4;
 				}
 				strcpy(temp1, "B");
@@ -795,6 +787,9 @@ void trans(){
                     fprintf(MOUT, "\t\tsw,\t$ra\t0($gp)\n");
                     fprintf(MOUT, "\t\taddi,\t$gp,\t$gp,\t4\n");
                     coverreg();
+				}else if(strcmp(fir, "begin") == 0){
+                    coverreg();
+                    fprintf(MOUT, "%s:\n", fir);
 				}else{
                     fprintf(MOUT, "%s:\n", fir);
 				}
@@ -803,40 +798,6 @@ void trans(){
 				desj = regalloc(des, &desi);
 				firj = atoi(fir);
 				fprintf(MOUT, "\t\tli,\t$%d,\t%d\n", desj, firj);
-			}break;
-			case ARRV :{
-				firj = regalloc(fir, &firi);
-				secj = regalloc(sec, &seci);
-				desj = regalloc(des, &desi);
-				if(seci == -1){
-					secj = atoi(sec);
-					fprintf(MOUT, "\t\taddi,\t$27,\t$%d,\t%d\n", firj, secj*4);
-					if(desi == 0){
-						fprintf(MOUT, "\t\tlw,\t$26,\t0($27)\n");
-						fprintf(MOUT, "\t\tsw,\t%26,\t0($%d)\n", desj);
-					}else{
-						fprintf(MOUT, "\t\tlw,\t$%d,\t0($27)\n", desj);
-					}
-				}else if(seci == 0){
-					fprintf(MOUT, "\t\tlw,\t$26,\t0($%d)\n", secj);
-					fprintf(MOUT, "\t\tsll,\t$26,\t$26,\t2\n");
-					fprintf(MOUT, "\t\tadd,\t$26,\t$26,\t$%d\n", firj);
-					if(desi == 0){
-						fprintf(MOUT, "\t\tlw,\t$27,\t0($26)\n");
-						fprintf(MOUT, "\t\tsw,\t%27,\t0($%d)\n", desj);
-					}else{
-						fprintf(MOUT, "\t\tlw,\t$%d,\t0($26)\n", desj);
-					}
-				}else{
-					fprintf(MOUT, "\t\tsll,\t$26,\t$%d,\t2\n", secj);
-					fprintf(MOUT, "\t\tadd,\t$26,\t$26,\t$%d\n", firj);
-					if(desi == 0){
-						fprintf(MOUT, "\t\tlw,\t$27,\t0($26)\n");
-						fprintf(MOUT, "\t\tsw,\t%27,\t0($%d)\n", desj);
-					}else{
-						fprintf(MOUT, "\t\tlw,\t$%d,\t0($26)\n", desj);
-					}
-				}
 			}break;
 			case ARRA :{
                 firj = regalloc(fir, &firi);
@@ -910,15 +871,15 @@ void trans(){
                 secj = atoi(sec);
                 if(firi == 0){
                     fprintf(MOUT, "\t\tlw,\t$26,\t0($%d)\n", firj);
-                    fprintf(MOUT, "\t\tadd,\t$a%d,\t$26,\t$0\n", secj);
+                    fprintf(MOUT, "\t\tadd,\t$%d,\t$26,\t$0\n", secj+4);
                 }else{
-                    fprintf(MOUT, "\t\tadd,\t$a%d,\t$%d,\t$0\n", secj, firj);
+                    fprintf(MOUT, "\t\tadd,\t$%d,\t$%d,\t$0\n", secj+4, firj);
                 }
             }break;
             case TRAR :{
                 firj = regalloc(fir, &firi);
                 secj = atoi(sec);
-                fprintf(MOUT, "\t\tadd,\t$a%d,\t$%d,\t$0\n", secj, firj);
+                fprintf(MOUT, "\t\tadd,\t$%d,\t$%d,\t$0\n", secj+4, firj);
             }break;
 			case RETP :{
 			    fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
@@ -926,13 +887,12 @@ void trans(){
 				fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
 				fprintf(MOUT, "\t\tlw,\t$sp,\t0($gp)\n");
 				fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
-				for(desi = 25; desi > 8; desi--){
+				for(desi = 25; desi > 4; desi--){
 					fprintf(MOUT, "\t\tlw,\t$%d,\t0($gp)\n", desi);
 					fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
 				}
 				fprintf(MOUT, "\t\tlw,\t$%d,\t0($gp)\n", desi);
 				fprintf(MOUT, "\t\tjr,\t$ra\n");
-                recoverreg();
 			}break;
 			case RETF :{
 			    fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
@@ -941,13 +901,18 @@ void trans(){
 				fprintf(MOUT, "\t\tlw,\t$v0,\t4($sp)\n");
 				fprintf(MOUT, "\t\tlw,\t$sp,\t0($gp)\n");
 				fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
-				for(desi = 25; desi > 8; desi--){
+				for(desi = 25; desi > 4; desi--){
 					fprintf(MOUT, "\t\tlw,\t$%d,\t0($gp)\n", desi);
 					fprintf(MOUT, "\t\tsubi,\t$gp,\t$gp,\t4\n");
 				}
 				fprintf(MOUT, "\t\tlw,\t$%d,\t0($gp)\n", desi);
 				fprintf(MOUT, "\t\tjr,\t$ra\n");
-				recoverreg();
+			}break;
+			case SAVR :{
+                for(desi = 4; desi <= 25; desi++){
+					fprintf(MOUT, "\t\tsw,\t$%d,\t0($gp)\n", desi);
+					fprintf(MOUT, "\t\taddi,\t$gp,\t$gp,\t4\n");
+				}
 			}break;
 			default :{}break;
 		}

@@ -25,6 +25,8 @@ char * reserverTable[norw];//保留字表
 FILE * In;
 FILE * Out;
 FILE * MOUT;
+int errornum;
+
 void getChar();//读一个字符
 int getLine();//读新的一行
 void clearToken();//当前字符串读取完毕

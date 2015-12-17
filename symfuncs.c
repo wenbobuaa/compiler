@@ -289,6 +289,7 @@ int transNum(){
 
 void error(int sw){
 	int i = 0;
+	errornum++;
 	printf("ERROE!\n");
 	printf("%4d: ", ll);
 	printf("%s\n", line);
