@@ -45,12 +45,16 @@ procedure test( p : integer; t : char);
 			end
 		end
     end;
+  function xtest4 (i : integer; j : integer):integer;
+    begin
+	  xtest4 := i/j
+	end;
   begin
     read(sw);
 	case sw of
 	  1 : begin
 			read(i, j);
-			write(xtest1(i, j));
+			write(xtest4(i*j, xtest1(i, j)));
 			write(" ");
 			write(i);
 			write(" ");
